@@ -93,6 +93,8 @@ export async function readLabelWithGemini(
     if (!(error instanceof ApiError) || error.status !== 503) throw error;
     await delay(1000, undefined, { signal });
     const interaction = await ai.interactions.create({
+      // Inline image and text parts require the beta Interactions request format.
+      api_version: "v1beta",
       model,
       store: false,
       input: [{ type: "image", mime_type: mimeType, data }, { type: "text", text: prompt }],
@@ -100,6 +102,7 @@ export async function readLabelWithGemini(
       response_format: { type: "text", mime_type: "application/json", schema: ANSWER_SCHEMA },
     }, { signal, maxRetries: 0 });
     text = interaction.output_text;
+    console.info("[analyze] Gemini Interactions retry returned a response.");
   }
   return normalizeAnswer(JSON.parse(text ?? ""));
 }
