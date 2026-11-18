@@ -2,14 +2,14 @@
 
 [Open the live application](https://tanba-ai.vercel.app/) · [Production test results](docs/real-run-results.md)
 
-Tańba AI turns a photo of a foreign food label into a label in Kazakh and Russian, and shows which required details are missing.
+Tańba AI translates product labels into Kazakh and Russian, with a focus on Korean cosmetics. Upload a photo to read ingredients, directions, precautions and other printed details. Food labels also have a checklist of required details.
 
 It is the MVP for the Tańba AI startup project (Technological Entrepreneurship, AITU, group BDA-2403).
 
 ## What the user does
 
 1. **Upload** a photo for Gemini to read, or try a prepared food or Korean cosmetics example.
-2. **Check and edit**: the AI reads the label and translates each part. The user corrects the text and sees which required details are missing.
+2. **Check and edit** the text by comparing each translation against the original.
 3. **Download**: print the finished label as a sticker, save it as PDF, download it as a text file, or copy it.
 
 The interface works in English and Kazakh. The finished label is in Kazakh and Russian.
@@ -60,7 +60,7 @@ The app runs on any host that supports Next.js. With Vercel:
 | `npm run dev` | Starts the app for development |
 | `npm run build` | Builds the production version |
 | `npm run start` | Runs the production version |
-| `npm test` | Runs 18 automatic checks of the app's rules |
+| `npm test` | Runs the automated test suite |
 | `npm run lint` | Checks the code style |
 
 A browser test of the whole journey is in `tests/e2e/journey.py`; the file explains how to run it.

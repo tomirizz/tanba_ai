@@ -12,7 +12,7 @@ export type LabelLine = {
 export function labelLines(fields: LabelFields, lang: OutputLang): LabelLine[] {
   const lines: LabelLine[] = [];
   for (const def of FIELDS) {
-    const text = fields[def.id][lang].trim();
+    const text = fields[def.id]?.[lang]?.trim() ?? "";
     if (text === "") continue;
     lines.push({ id: def.id, title: def.printTitle ? def.label[lang] : null, text });
   }

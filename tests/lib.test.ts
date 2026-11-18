@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 import { checkLabel } from "../lib/compliance";
 import { demoResult, isSampleId } from "../lib/demo";
 import { buildLabelText } from "../lib/exportText";
-import { emptyFields } from "../lib/fields";
+import { emptyFields, reviewFields } from "../lib/fields";
 import { normalizeAnswer } from "../lib/normalize";
 import { allowRequest } from "../lib/rateLimit";
 import { MAX_FILE_BYTES, checkFile, sniffImageType } from "../lib/validation";
@@ -152,5 +152,29 @@ describe("samples and request limit", () => {
     expect(allowRequest("visitor-a", start + 20)).toBe(false);
     expect(allowRequest("visitor-b", start + 20)).toBe(true);
     expect(allowRequest("visitor-a", start + 10 * 60 * 1000 + 100)).toBe(true);
+  });
+});
+
+describe("product label categories", () => {
+  it("preserves cosmetic precautions through review and export", () => {
+    const answer = normalizeAnswer({
+      isLabel: true, category: "cosmetics", sourceLanguage: "Korean",
+      fields: [{ id: "warnings", original: "눈에 들어가지 않도록 하세요.", kk: "Көзге тигізбеңіз.", ru: "Избегайте попадания в глаза." }],
+    });
+    expect(answer.category).toBe("cosmetics");
+    expect(reviewFields(answer.category, answer.fields).map(({ id }) => id)).toEqual(["warnings"]);
+    expect(buildLabelText(answer.fields)).toContain("Избегайте попадания в глаза.");
+  });
+
+  it("keeps product-specific details and uses a neutral category for an unknown type", () => {
+    const answer = normalizeAnswer({
+      isLabel: true, category: "textiles",
+      fields: [{ id: "otherDetails", original: "Model TX-42", kk: "TX-42 моделі", ru: "Модель TX-42" }],
+    });
+    expect(answer.category).toBe("other");
+    expect(answer.isLabel).toBe(true);
+    expect(reviewFields(answer.category, answer.fields).map(({ id }) => id)).toEqual(["otherDetails"]);
+    expect(buildLabelText(answer.fields)).toContain("TX-42");
+    expect(reviewFields("food", emptyFields()).some(({ id }) => id === "nutrition")).toBe(true);
   });
 });

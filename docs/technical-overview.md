@@ -28,14 +28,14 @@ flowchart LR
 1. **Browser.** Checks the file type and size, shows the photo, sends it to the server.
 2. **Server (`app/api/analyze/route.ts`).** Applies the request limit, checks the file again
    (including its first bytes), and calls the AI. It holds the secret key.
-3. **AI (`lib/gemini.ts`).** Gemini receives the photo, extraction instructions and a JSON schema for eleven fields. Each field has space for the original text and both translations. After an upstream 503 the server waits one second and retries once with the same model through the Interactions API, with storage disabled. The two calls share a 45-second deadline.
+3. **AI (`lib/gemini.ts`).** Gemini receives the photo, extraction instructions and a JSON schema for the product category and printed details, including ingredients or materials, precautions, origin, lot numbers and other specifications. Each field has space for the original text and both translations. After an upstream 503 the server waits one second and retries once with the same model through the Interactions API, with storage disabled. The two calls share a 45-second deadline.
 4. **Cleaning (`lib/normalize.ts`).** The answer is validated: unknown details are dropped,
    wrong types become empty text, long text is cut. If no text was found, the photo is treated
    as "not a label".
 5. **Browser again.** The required-details check (`lib/compliance.ts`) runs in the browser after
    every edit, so the count updates at once and the AI is not called again.
 
-The check follows TR CU 022/2011, article 4, part 4.1: product name, ingredients, quantity,
+For food, the check follows TR CU 022/2011, article 4, part 4.1: product name, ingredients, quantity,
 date of manufacture, shelf life, storage conditions, manufacturer, importer, nutrition facts
 and the EAC mark are required (10 items); instructions for use and GMO information are
 conditional. A detail counts as filled in only when both translations have text.
@@ -55,7 +55,7 @@ The edited label exists only in the open page and disappears when it is closed.
 | npm packages: `next`, `react`, `react-dom`, `@google/genai`, two font packages | Run time | Versions are pinned in `package-lock.json` |
 
 Configuration is two environment variables: `GEMINI_API_KEY` and `GEMINI_MODEL`.
-The four sample buttons open prepared labels in the browser. The Korean rice cream and green tea cleanser demos show the original text and editable translations without a food checklist. Uploading a file requires a configured API key.
+The four sample buttons open prepared labels in the browser. The Korean rice cream and green tea cleanser demos show the original text and editable translations without a food checklist. Live uploads support cosmetics, food and other product labels with the same configured API key.
 
 ## Deployment
 

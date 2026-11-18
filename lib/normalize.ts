@@ -2,12 +2,13 @@
 // The AI returns valid JSON, but its values are not guaranteed to be right,
 // so nothing from it is trusted without a check.
 
-import { FIELD_IDS, emptyFields, type FieldId, type LabelFields } from "./fields";
+import { FIELD_IDS, emptyFields, type ProductCategory, type FieldId, type LabelFields } from "./fields";
 
 const MAX_TEXT = 2000; // longest text kept for one label part
 
 export type NormalizedAnswer = {
   isLabel: boolean;
+  category: ProductCategory;
   sourceLanguage: string;
   eacMark: boolean;
   fields: LabelFields;
@@ -45,6 +46,7 @@ export function normalizeAnswer(raw: unknown): NormalizedAnswer {
 
   return {
     isLabel: data.isLabel === true && anyText,
+    category: data.category === "food" || data.category === "cosmetics" ? data.category : "other",
     sourceLanguage: cleanText(data.sourceLanguage).slice(0, 40),
     eacMark: data.eacMark === true,
     fields,

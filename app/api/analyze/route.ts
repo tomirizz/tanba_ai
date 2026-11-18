@@ -63,6 +63,7 @@ export async function POST(request: Request) {
 
     const result: AnalyzeResult = {
       sourceLanguage: answer.sourceLanguage,
+      category: answer.category,
       fields: answer.fields,
       eacMark: answer.eacMark,
       mode: "ai",

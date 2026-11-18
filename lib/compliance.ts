@@ -2,7 +2,7 @@
 // A detail counts as filled in only when BOTH translations (Kazakh and
 // Russian) have text, because the finished label needs both languages.
 
-import { FIELDS, type FieldId, type LabelFields } from "./fields";
+import { FOOD_FIELDS, type FieldId, type LabelFields } from "./fields";
 
 export type CheckStatus = "ok" | "missing" | "optional";
 
@@ -27,7 +27,7 @@ export function checkLabel(fields: LabelFields, eacMark: boolean): CheckResult {
   let found = 0;
   let total = 0;
 
-  for (const def of FIELDS) {
+  for (const def of FOOD_FIELDS) {
     const field = fields[def.id];
     const filled = hasText(field.kk) && hasText(field.ru);
 

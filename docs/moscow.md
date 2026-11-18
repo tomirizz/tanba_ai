@@ -13,7 +13,7 @@ feature to another group if the evidence does not support it.
 | Read label text from a photo | *to fill from CustDev* | Must | Medium | Depends on the AI service and photo quality | Built |
 | Translate each label part into Kazakh and Russian | *to fill from CustDev* | Must | Medium | AI can mistranslate; needs human review | Built |
 | Let the user edit every translation | *to fill from CustDev* | Must | Low | — | Built |
-| Check required details (TR CU 022/2011, art. 4, part 4.1) | *to fill from CustDev* | Must | Low | Covers the general list only | Built |
+| Check required details on food labels (TR CU 022/2011, art. 4, part 4.1) | *to fill from CustDev* | Must | Low | Covers the general list only | Built |
 | Interface in English and Kazakh | Course requirement | Must | Low | Kazakh text needs review by a fluent speaker | Built |
 | Download the finished label (print / PDF / text) | *to fill from CustDev* | Must | Low | — | Built |
 | Clear messages for wrong files and AI failures | Course requirement (boundary case) | Must | Low | — | Built |
@@ -23,5 +23,5 @@ feature to another group if the evidence does not support it.
 | Several photos per product (front and back) | *to fill from CustDev* | Could | Medium | — | Not built |
 | User accounts and saved labels | *to fill from CustDev* | Won't (now) | High | Needs a database and personal-data handling | Left out |
 | Payment | *to fill from CustDev* | Won't (now) | High | Legal and security work | Left out |
-| Non-food products (cosmetics, household goods) | *to fill from CustDev* | Won't (now) | High | Different regulations | Left out |
+| Automated regulatory checks for cosmetics and other non-food products | *to fill from CustDev* | Won't (now) | High | Different regulations | Left out |
 | Batch upload of many labels | *to fill from CustDev* | Won't (now) | Medium | AI cost | Left out |

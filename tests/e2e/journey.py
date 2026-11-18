@@ -29,15 +29,15 @@ with sync_playwright() as p:
     pg.on("console", lambda m: errors.append(m.text) if m.type == "error" else None)
     pg.on("pageerror", lambda e: errors.append(str(e)))
     pg.goto(BASE, wait_until="networkidle")
-    ok("EN heading", "Turn a foreign food label" in pg.inner_text("h1"))
+    ok("EN heading", "Translate product labels" in pg.inner_text("h1"))
     pg.screenshot(path=f"{SHOTS}/1-upload-en.png", full_page=True)
 
     # language switch + persistence
     pg.get_by_role("button", name="ҚАЗ").click()
-    ok("KZ heading", "Шетелдік азық-түлік" in pg.inner_text("h1"))
+    ok("KZ heading", "Тауар заттаңбаларын" in pg.inner_text("h1"))
     ok("html lang kk", pg.evaluate("document.documentElement.lang") == "kk")
     pg.reload(wait_until="networkidle")
-    ok("KZ persists after reload", "Шетелдік" in pg.inner_text("h1"))
+    ok("KZ persists after reload", "Тауар заттаңбаларын" in pg.inner_text("h1"))
     pg.screenshot(path=f"{SHOTS}/2-upload-kk.png", full_page=True)
 
     # boundary: wrong file type

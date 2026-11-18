@@ -1,9 +1,4 @@
-// The parts of a food label that Tańba AI reads, translates and checks.
-// The list follows TR CU 022/2011, article 4, part 4.1, point 1.
-// Point 7 of that list (manufacturer and importer) is split into two rows,
-// because imported goods usually arrive without the importer's details.
-
-export const FIELD_IDS = [
+export const FOOD_FIELD_IDS = [
   "name",
   "composition",
   "quantity",
@@ -16,6 +11,10 @@ export const FIELD_IDS = [
   "usage",
   "gmo",
 ] as const;
+
+export const FIELD_IDS = [...FOOD_FIELD_IDS, "warnings", "batch", "origin", "otherDetails"] as const;
+export const PRODUCT_CATEGORIES = ["cosmetics", "food", "other"] as const;
+export type ProductCategory = (typeof PRODUCT_CATEGORIES)[number];
 
 export type FieldId = (typeof FIELD_IDS)[number];
 
@@ -129,7 +128,32 @@ export const FIELDS: FieldDef[] = [
       ru: "Сведения о ГМО",
     },
   },
+  {
+    id: "warnings", level: "conditional", printTitle: true,
+    label: { en: "Warnings", kk: "Ескертулер", ru: "Меры предосторожности" },
+  },
+  {
+    id: "batch", level: "conditional", printTitle: true,
+    label: { en: "Lot or batch", kk: "Партия нөмірі", ru: "Номер партии" },
+  },
+  {
+    id: "origin", level: "conditional", printTitle: true,
+    label: { en: "Country of origin", kk: "Шығарылған елі", ru: "Страна происхождения" },
+  },
+  {
+    id: "otherDetails", level: "conditional", printTitle: true,
+    label: { en: "Other label details", kk: "Заттаңбадағы өзге мәліметтер", ru: "Другие сведения на этикетке" },
+  },
 ];
+
+const foodIds = new Set<FieldId>(FOOD_FIELD_IDS);
+export const FOOD_FIELDS = FIELDS.filter(({ id }) => foodIds.has(id));
+
+// Retain the familiar food worksheet. For other goods, show what was printed
+// and keep those fields editable even if a translation is subsequently cleared.
+export function reviewFields(category: ProductCategory, fields: LabelFields): FieldDef[] {
+  return FIELDS.filter(({ id }) => (category === "food" && foodIds.has(id)) || Boolean(fields[id]?.original));
+}
 
 // One label part: the text as printed, plus its two translations.
 export type LabelField = { original: string; kk: string; ru: string };
@@ -143,7 +167,7 @@ export type AnalyzeResult = {
   eacMark: boolean;
   // "ai": read by the AI service. "demo": a prepared example, no AI call.
   mode: "ai" | "demo";
-  sampleCategory?: "cosmetics";
+  category: ProductCategory;
 };
 
 export function emptyFields(): LabelFields {
