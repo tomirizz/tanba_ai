@@ -5,7 +5,7 @@
 
 import { emptyFields, type AnalyzeResult } from "./fields";
 
-export const SAMPLE_IDS = ["oat-cookies", "hazelnut-chocolate", "rice-cream", "green-tea-cleanser"] as const;
+export const SAMPLE_IDS = ["rice-cream", "green-tea-cleanser", "oat-cookies", "hazelnut-chocolate"] as const;
 
 export type SampleId = (typeof SAMPLE_IDS)[number];
 
@@ -61,7 +61,7 @@ function oatCookies(): AnalyzeResult {
     kk: "100 г өнімде – энергетикалық құндылығы 1950 кДж / 465 ккал, майлар 19 г, көмірсулар 64 г, ақуыздар 7 г",
     ru: "в 100 г продукта – энергетическая ценность 1950 кДж / 465 ккал, жиры 19 г, углеводы 64 г, белки 7 г",
   };
-  return { sourceLanguage: "English", fields, eacMark: false, mode: "demo" };
+  return { category: "food", sourceLanguage: "English", fields, eacMark: false, mode: "demo" };
 }
 
 function hazelnutChocolate(): AnalyzeResult {
@@ -97,7 +97,7 @@ function hazelnutChocolate(): AnalyzeResult {
     kk: "Anadolu Tatlı Gıda A.Ş., Стамбұл, Түркия",
     ru: "Anadolu Tatlı Gıda A.Ş., Стамбул, Турция",
   };
-  return { sourceLanguage: "Turkish", fields, eacMark: false, mode: "demo" };
+  return { category: "food", sourceLanguage: "Turkish", fields, eacMark: false, mode: "demo" };
 }
 
 function cosmeticSample(id: "rice-cream" | "green-tea-cleanser"): AnalyzeResult {
@@ -137,7 +137,7 @@ function cosmeticSample(id: "rice-cream" | "green-tea-cleanser"): AnalyzeResult 
       ru: "Вспеньте средство с водой, умойтесь и смойте водой.",
     };
   }
-  return { sourceLanguage: "Korean", fields, eacMark: false, mode: "demo", sampleCategory: "cosmetics" };
+  return { sourceLanguage: "Korean", fields, eacMark: false, mode: "demo", category: "cosmetics" };
 }
 
 export function demoResult(id: SampleId): AnalyzeResult {

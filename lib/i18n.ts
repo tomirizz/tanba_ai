@@ -10,7 +10,7 @@ export const UI_LANGS: { id: UiLang; short: string; name: string }[] = [
 ];
 
 const en = {
-  tagline: "Label localisation for imported food",
+  tagline: "Product label translation",
   langSwitch: "Interface language",
 
   stepUpload: "Upload",
@@ -18,9 +18,9 @@ const en = {
   stepDownload: "Download",
   stepsLabel: "Progress",
 
-  heroTitle: "Turn a foreign food label into Kazakh and Russian",
+  heroTitle: "Translate product labels into Kazakh and Russian",
   heroText:
-    "Upload a photo of the label. Tańba AI reads it, translates each part and shows which required details are missing.",
+    "Upload a photo of Korean skincare, makeup or another product label. Review the original text alongside both translations, then download your label.",
   dropTitle: "Choose a label photo",
   dropHint: "JPG, PNG or WEBP, up to 8 MB. You can also drag a file here.",
   privacy:
@@ -30,7 +30,6 @@ const en = {
   sampleChocolate: "Hazelnut chocolate, label in Turkish",
   sampleRiceCream: "Rice moisturising cream, label in Korean",
   sampleGreenTeaCleanser: "Green tea cleansing foam, label in Korean",
-  cosmeticDemo: "Prepared Korean cosmetics sample. You can edit and download both translations. Live photo analysis is available for food labels.",
 
   analyzing: "Reading and translating the label…",
   analyzingHint: "This usually takes up to half a minute.",
@@ -91,7 +90,7 @@ const en = {
 export type TextKey = keyof typeof en;
 
 const kk: Record<TextKey, string> = {
-  tagline: "Импорттық азық-түлік заттаңбаларын бейімдеу",
+  tagline: "Тауар заттаңбаларын аудару",
   langSwitch: "Интерфейс тілі",
 
   stepUpload: "Жүктеу",
@@ -99,9 +98,9 @@ const kk: Record<TextKey, string> = {
   stepDownload: "Жүктеп алу",
   stepsLabel: "Барысы",
 
-  heroTitle: "Шетелдік азық-түлік заттаңбасын қазақ және орыс тілдеріне аударыңыз",
+  heroTitle: "Тауар заттаңбаларын қазақ және орыс тілдеріне аударыңыз",
   heroText:
-    "Заттаңбаның фотосын жүктеңіз. Tańba AI мәтінді оқып, әр бөлігін аударады және қандай міндетті мәліметтер жетіспейтінін көрсетеді.",
+    "Кореялық косметиканың немесе басқа тауардың заттаңбасын фотоға түсіріп жүктеңіз. Түпнұсқаны екі аудармамен салыстырып, дайын заттаңбаны жүктеп алыңыз.",
   dropTitle: "Заттаңба фотосын таңдаңыз",
   dropHint: "JPG, PNG немесе WEBP, 8 МБ-қа дейін. Файлды осы жерге сүйреп әкелуге де болады.",
   privacy:
@@ -111,7 +110,6 @@ const kk: Record<TextKey, string> = {
   sampleChocolate: "Жаңғақты шоколад, түрік тіліндегі заттаңба",
   sampleRiceCream: "Күріш сығындысы бар крем, корей тіліндегі заттаңба",
   sampleGreenTeaCleanser: "Көк шай сығындысы бар бет жууға арналған көбік, корей тіліндегі заттаңба",
-  cosmeticDemo: "Бұл — корей косметикасының дайын үлгісі. Екі аударманы да өңдеп, жүктеп алуға болады. Фото арқылы талдау азық-түлік заттаңбаларына арналған.",
 
   analyzing: "Заттаңба оқылып, аударылып жатыр…",
   analyzingHint: "Әдетте бұл жарты минутқа дейін созылады.",

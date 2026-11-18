@@ -3,7 +3,7 @@
 
 import { ApiError, GoogleGenAI } from "@google/genai";
 import { setTimeout as delay } from "node:timers/promises";
-import { FIELD_IDS } from "./fields";
+import { FIELD_IDS, PRODUCT_CATEGORIES } from "./fields";
 import { normalizeAnswer, type NormalizedAnswer } from "./normalize";
 
 // The model name changes over time. Set GEMINI_MODEL in .env.local to the
@@ -12,7 +12,7 @@ const DEFAULT_MODEL = "gemini-3.8-flash";
 
 const TIMEOUT_MS = 45_000;
 
-const INSTRUCTIONS = `You read photos of packaged food labels and prepare them for sale in Kazakhstan.
+const INSTRUCTIONS = `You transcribe and translate product labels into Kazakh and Russian for people in Kazakhstan. Korean skincare and makeup are a main use case. Accept readable labels for any product, including cosmetics, household goods, electronics, textiles and food.
 
 Rules:
 1. Copy only text that is really printed on the label. Never invent or guess missing details.
@@ -22,29 +22,34 @@ Rules:
    Example for shelfLife: original "Best before: 12.06.2027", kk "12.06.2027 дейін", ru "до 12.06.2027".
    Exception: quantity keeps its words, for example "Масса нетто 200 г".
 4. Keep numbers, dates, units, percentages, E-numbers, company names and addresses exactly as printed. Translate country and city names.
-5. Use standard food-labelling terms in Kazakh and Russian. Keep allergen statements.
-6. Set "isLabel" to false if the photo is not a food label or the text cannot be read.
+5. Use terminology appropriate to the product. Preserve printed INCI names, model numbers, units and safety warnings. Translate Korean directions, precautions and period-after-opening statements faithfully. Never add health advice or product claims.
+6. Set "isLabel" to true for a readable product or packaging label, including a fragment such as ingredients, directions, specifications or a care label. Set it to false for unreadable images or images with no product label. Classify the product as "cosmetics", "food", or "other". If the product type is unclear, use "other".
 7. Set "eacMark" to true only if the EAC conformity mark is visible.
-8. "sourceLanguage" is the main language of the label, as an English word, for example "English" or "Turkish".
+8. "sourceLanguage" is the main language of the label, as an English word, for example "Korean", "English" or "Turkish". Return only fields supported by visible text.
 
 Details:
 - name: product name
-- composition: ingredients list, including allergens
+- composition: ingredients (including INCI for cosmetics and printed allergens for food), materials or fibre composition
 - quantity: net weight or volume
 - manufactureDate: date of manufacture
-- shelfLife: shelf life or best-before date
+- shelfLife: expiry, shelf life or period after opening
 - storage: storage conditions
 - manufacturer: manufacturer name and address
 - importer: importer name and address
 - nutrition: nutrition facts (energy, fat, carbohydrate, protein)
 - usage: preparation or usage instructions and restrictions
-- gmo: information about genetically modified ingredients`;
+- gmo: information about genetically modified ingredients in food
+- warnings: printed precautions or hazards
+- batch: batch or lot number
+- origin: country of origin
+- otherDetails: any other printed product information not covered above, including electrical ratings, model identifiers or care symbols with clearly identifiable meanings; retain distinct details on separate lines`;
 
 // JSON Schema that forces the AI to answer in a fixed structure.
 const ANSWER_SCHEMA = {
   type: "object",
   properties: {
     isLabel: { type: "boolean" },
+    category: { type: "string", enum: [...PRODUCT_CATEGORIES] },
     sourceLanguage: { type: "string" },
     eacMark: { type: "boolean" },
     fields: {
@@ -61,7 +66,7 @@ const ANSWER_SCHEMA = {
       },
     },
   },
-  required: ["isLabel", "sourceLanguage", "eacMark", "fields"],
+  required: ["isLabel", "category", "sourceLanguage", "eacMark", "fields"],
 };
 
 export async function readLabelWithGemini(
