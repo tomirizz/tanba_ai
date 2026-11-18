@@ -6,9 +6,9 @@ import "@fontsource-variable/unbounded";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Tańba AI — food label localisation for Kazakhstan",
+  title: "Tańba AI — product labels in Kazakh and Russian",
   description:
-    "Upload a photo of a foreign food label. Tańba AI translates it into Kazakh and Russian and checks the required details.",
+    "Translate Korean cosmetics and other product labels into Kazakh and Russian. Upload a photo, review the wording and export your label.",
 };
 
 export const viewport: Viewport = {
