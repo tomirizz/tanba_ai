@@ -28,7 +28,7 @@ flowchart LR
 1. **Browser.** Checks the file type and size, shows the photo, sends it to the server.
 2. **Server (`app/api/analyze/route.ts`).** Applies the request limit, checks the file again
    (including its first bytes), and calls the AI. It holds the secret key.
-3. **AI (`lib/gemini.ts`).** Gemini receives the photo, extraction instructions and a JSON schema for the product category and printed details, including ingredients or materials, precautions, origin, lot numbers and other specifications. Each field has space for the original text and both translations. After an upstream 503 the server waits one second and retries once with the same model through the Interactions API, with storage disabled. The two calls share a 45-second deadline.
+3. **AI (`lib/gemini.ts`).** Gemini receives the photo, extraction instructions and a JSON schema for the product category and printed details, including ingredients or materials, precautions, origin, lot numbers and other specifications. Each field has space for the original text and both translations. After an upstream 503 the server waits one second and retries once with a different Flash-Lite model through the v1beta Interactions API, with storage disabled. The two calls share a 45-second deadline.
 4. **Cleaning (`lib/normalize.ts`).** The answer is validated: unknown details are dropped,
    wrong types become empty text, long text is cut. If no text was found, the photo is treated
    as "not a label".
