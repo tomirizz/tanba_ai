@@ -1,7 +1,7 @@
 "use client";
 
 import type { CheckResult } from "@/lib/compliance";
-import { FIELDS, type AnalyzeResult, type FieldId, type OutputLang } from "@/lib/fields";
+import { reviewFields, type AnalyzeResult, type FieldId, type OutputLang } from "@/lib/fields";
 import CheckList from "./CheckList";
 import { useI18n } from "./I18n";
 
@@ -25,8 +25,7 @@ export default function ReviewStep({
   onContinue: () => void;
 }) {
   const { lang, t } = useI18n();
-  const cosmetic = result.sampleCategory === "cosmetics";
-  const visibleFields = cosmetic ? FIELDS.filter(({ id }) => result.fields[id].original) : FIELDS;
+  const visibleFields = reviewFields(result.category, result.fields);
 
   return (
     <section className="review">
@@ -35,7 +34,7 @@ export default function ReviewStep({
           {t("reviewTitle")}
         </h1>
         <p className="page-text">{t("reviewText")}</p>
-        {result.mode === "demo" && <p className="demo-note">{t(cosmetic ? "cosmeticDemo" : "demoNote")}</p>}
+        {result.mode === "demo" && <p className="demo-note">{t("demoNote")}</p>}
       </div>
 
       <div className="review-layout">

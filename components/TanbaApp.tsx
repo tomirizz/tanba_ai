@@ -103,7 +103,7 @@ export default function TanbaApp() {
     setStage("upload");
   }
 
-  const check = result && result.sampleCategory !== "cosmetics" ? checkLabel(result.fields, result.eacMark) : null;
+  const check = result?.category === "food" ? checkLabel(result.fields, result.eacMark) : null;
 
   return (
     <div className="page">
