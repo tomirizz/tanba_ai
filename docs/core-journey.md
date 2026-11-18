@@ -10,12 +10,14 @@ Everything in the MVP serves this path.
 | # | The user | The app | Result |
 | --- | --- | --- | --- |
 | 1 | Opens the site and picks the interface language (English or Kazakh) | Shows the upload screen in that language and remembers the choice | The user understands what to do |
-| 2 | Uploads a photo of the label, or picks a sample | Checks the file type and size, shows a progress screen | The photo is accepted |
+| 2 | Uploads a photo of the label | Checks the file type and size, shows a progress screen | The photo is accepted |
 | 3 | Waits | Sends the photo to the AI, which reads the text and translates each part into Kazakh and Russian | A table of label details in three columns: original, Kazakh, Russian |
 | 4 | Reads and corrects the translations | Recounts the required details after every edit | The user sees "Filled in: N of 10" and what is missing |
 | 5 | Adds missing details (for example, the importer) and confirms the EAC mark | Updates the check | The missing list gets shorter |
 | 6 | Goes to download | Builds the finished label as a sticker with two language blocks | A print-ready label |
 | 7 | Prints, saves as PDF, downloads a text file or copies the text | — | The user leaves with a usable label |
+
+The two sample buttons open prepared, editable examples directly at step 4. The review screen identifies them as demos.
 
 ## Non-ideal cases the app handles
 

@@ -10,19 +10,29 @@
 | AI path against a local stand-in for the Gemini service: good answer, "not a label", broken answer, service error, quota error | Local mock server | Correct result or error message each time |
 | Type check and code style | `npx tsc --noEmit`, `npm run lint` | No problems |
 
+## Production checks on 18 Nov 2026
+
+| Request | Observed response |
+| --- | --- |
+| `GET /` | HTTP 200. The upload screen opened. |
+| `POST /api/analyze` with a plain-text file | HTTP 415 and `fileType`. |
+| Two project labels uploaded as files | HTTP 200 and AI mode. Gemini returned original text and both translations for 8 of 11 English-label fields and 6 of 11 Turkish-label fields. |
+| An independent image containing an ingredients list | The first request timed out. The next upload returned HTTP 200, the English ingredients and both translations. The other ten fields were empty. |
+| An image without text and a severely blurred label | Both returned HTTP 422 and `noLabel`. |
+| Sample buttons and editing | Both buttons opened a prepared label. An edited Russian product name appeared in the export preview. |
+
+The same English file uploaded with the normal site button opened the review screen. Four earlier requests returned HTTP 502 after Google reported high demand. The report includes timings, field-level results and the failed requests. [Live-run results](real-run-results.md)
+
 ## What has NOT been tested yet
 
-- **The real Gemini service.** On 18 Nov 2026 the API key and approved model were configured.
-  The local environment blocked the development server from listening, so no image request
-  reached Gemini. [Live-run results](real-run-results.md)
-- **Real label photos.** Only the two generated sample images were used.
+- **Extraction on real photographs.** The team’s test-photo folder was unavailable. The live checks used project examples, an external label excerpt and two controlled inputs. Human translation review is pending.
 - **Real users.** See the plan below.
 - **Screen readers, old browsers, slow connections.**
 - **Printing on a real sticker printer.**
 
-## First run with a real key
+## Follow-up checks with real photos
 
-1. Put the key and a current model name in `.env.local`, restart the app.
+1. Open the [production application](https://tanba-ai.vercel.app/).
 2. Upload a sharp photo of a real label. Expect the check screen within about 30 seconds.
 3. Compare every detail with the label. Note every wrong or missing value.
 4. Upload a photo without a label (for example, a landscape). Expect "No label text was found".

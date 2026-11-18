@@ -28,9 +28,7 @@ flowchart LR
 1. **Browser.** Checks the file type and size, shows the photo, sends it to the server.
 2. **Server (`app/api/analyze/route.ts`).** Applies the request limit, checks the file again
    (including its first bytes), and calls the AI. It holds the secret key.
-3. **AI (`lib/gemini.ts`).** One request with the photo, fixed instructions and a JSON Schema,
-   so the answer always has the same structure: eleven label details, each with the original
-   text, a Kazakh and a Russian translation.
+3. **AI (`lib/gemini.ts`).** Gemini receives the photo, extraction instructions and a JSON schema for eleven fields. Each field has space for the original text and both translations. After an upstream 503 the server waits one second and retries once with the same model through the Interactions API, with storage disabled. The two calls share a 45-second deadline.
 4. **Cleaning (`lib/normalize.ts`).** The answer is validated: unknown details are dropped,
    wrong types become empty text, long text is cut. If no text was found, the photo is treated
    as "not a label".
@@ -57,13 +55,13 @@ The edited label exists only in the open page and disappears when it is closed.
 | npm packages: `next`, `react`, `react-dom`, `@google/genai`, two font packages | Run time | Versions are pinned in `package-lock.json` |
 
 Configuration is two environment variables: `GEMINI_API_KEY` and `GEMINI_MODEL`.
-Without a key the app runs in demo mode with two built-in sample labels.
+The two built-in sample buttons open prepared labels in the browser. Uploading a file requires a configured API key.
 
 ## Deployment
 
-The app is built with `npm run build` and can be hosted on any platform that runs Next.js.
-The source is published on [GitHub](https://github.com/tomirizz/tanba_ai). Production URL: [TO FILL].
-Production environment setup and deployment are pending.
+Vercel deployed the Next.js project from the `main` branch on 18 Nov 2026.
+Both Gemini variables are configured as sensitive values scoped to Production.
+The production home page returned HTTP 200. [Live application](https://tanba-ai.vercel.app/) · [Source](https://github.com/tomirizz/tanba_ai)
 
 ## Limitations
 
@@ -74,9 +72,7 @@ Production environment setup and deployment are pending.
 - **One photo per label.** Labels split across several sides are not combined.
 - **No saved work.** Closing the page loses the edits.
 - **Vendor dependency.** One AI provider. `lib/gemini.ts` is the only file to change to switch.
-- **Cost and quota.** Each photo is one AI request. The request limit is in memory only.
+- **Cost and quota.** A photo can trigger a second model call after a 503. The request limit is in memory only.
 - **Languages.** Interface: English and Kazakh. Output: Kazakh and Russian. The Kazakh text was
   drafted with AI and must be reviewed by a fluent speaker.
-- **Live AI verification.** On 18 Nov 2026 the development server could not open its local
-  port. No photo reached Gemini. The earlier integration checks used a local stand-in.
-  [Live-run results](real-run-results.md)
+- **Live AI verification.** On 18 Nov 2026 the production model `gemini-3.1-flash-lite` returned English and Turkish source text and both translations. A separate ingredients excerpt also worked after a timeout. Severe blur and an image without text both returned `noLabel`. [Live-run results](real-run-results.md)
