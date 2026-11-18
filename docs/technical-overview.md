@@ -55,7 +55,7 @@ The edited label exists only in the open page and disappears when it is closed.
 | npm packages: `next`, `react`, `react-dom`, `@google/genai`, two font packages | Run time | Versions are pinned in `package-lock.json` |
 
 Configuration is two environment variables: `GEMINI_API_KEY` and `GEMINI_MODEL`.
-The two built-in sample buttons open prepared labels in the browser. Uploading a file requires a configured API key.
+The four sample buttons open prepared labels in the browser. The Korean rice cream and green tea cleanser demos show the original text and editable translations without a food checklist. Uploading a file requires a configured API key.
 
 ## Deployment
 

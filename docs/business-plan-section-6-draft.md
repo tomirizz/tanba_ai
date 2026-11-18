@@ -9,9 +9,9 @@ An importer or shop owner in Kazakhstan starts with a photo of a foreign-languag
 | MoSCoW category | Scope | Reason for the decision |
 | --- | --- | --- |
 | Must | Read the photo, translate and edit each field, check required details, export the label, support English and Kazakh in the interface, and explain errors | These features complete the journey and meet the course requirements for language choice and error handling. |
-| Should | Two sample labels and a per-visitor request limit | Samples let a user try the journey without a product in hand. The limit constrains AI usage. |
+| Should | Two food samples, two prepared Korean cosmetics demos and a per-visitor request limit | Samples let a user try the journey without a product in hand. The limit constrains AI usage. |
 | Could | Sticker templates and multiple photos of one product | Templates need information about printers. Combining several sides of a package adds work beyond the single-photo journey. |
-| Won’t in this version | Accounts, saved labels, payments, batch uploads and non-food products | These introduce data storage, payment processing, additional AI calls or different labelling rules. |
+| Won’t in this version | Accounts, saved labels, payments, batch uploads and live analysis of non-food products | These introduce data storage, payment processing, additional AI calls or different labelling rules. |
 
 Customer interview evidence for these priorities is **[TO FILL]**. [Prioritisation table](moscow.md)
 

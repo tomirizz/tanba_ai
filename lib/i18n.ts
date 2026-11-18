@@ -28,6 +28,9 @@ const en = {
   samplesTitle: "No photo at hand? Try a sample label",
   sampleOat: "Oat cookies, label in English",
   sampleChocolate: "Hazelnut chocolate, label in Turkish",
+  sampleRiceCream: "Rice moisturising cream, label in Korean",
+  sampleGreenTeaCleanser: "Green tea cleansing foam, label in Korean",
+  cosmeticDemo: "Prepared Korean cosmetics sample. You can edit and download both translations. Live photo analysis is available for food labels.",
 
   analyzing: "Reading and translating the label…",
   analyzingHint: "This usually takes up to half a minute.",
@@ -106,6 +109,9 @@ const kk: Record<TextKey, string> = {
   samplesTitle: "Қолыңызда фото жоқ па? Үлгі заттаңбаны байқап көріңіз",
   sampleOat: "Сұлы печеньесі, ағылшын тіліндегі заттаңба",
   sampleChocolate: "Жаңғақты шоколад, түрік тіліндегі заттаңба",
+  sampleRiceCream: "Күріш сығындысы бар крем, корей тіліндегі заттаңба",
+  sampleGreenTeaCleanser: "Көк шай сығындысы бар бет жууға арналған көбік, корей тіліндегі заттаңба",
+  cosmeticDemo: "Бұл — корей косметикасының дайын үлгісі. Екі аударманы да өңдеп, жүктеп алуға болады. Фото арқылы талдау азық-түлік заттаңбаларына арналған.",
 
   analyzing: "Заттаңба оқылып, аударылып жатыр…",
   analyzingHint: "Әдетте бұл жарты минутқа дейін созылады.",

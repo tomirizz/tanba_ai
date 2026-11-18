@@ -5,7 +5,7 @@
 
 import { emptyFields, type AnalyzeResult } from "./fields";
 
-export const SAMPLE_IDS = ["oat-cookies", "hazelnut-chocolate"] as const;
+export const SAMPLE_IDS = ["oat-cookies", "hazelnut-chocolate", "rice-cream", "green-tea-cleanser"] as const;
 
 export type SampleId = (typeof SAMPLE_IDS)[number];
 
@@ -100,6 +100,51 @@ function hazelnutChocolate(): AnalyzeResult {
   return { sourceLanguage: "Turkish", fields, eacMark: false, mode: "demo" };
 }
 
+function cosmeticSample(id: "rice-cream" | "green-tea-cleanser"): AnalyzeResult {
+  const fields = emptyFields();
+  if (id === "rice-cream") {
+    fields.name = {
+      original: "쌀 보습 크림",
+      kk: "Күріш сығындысы бар ылғалдандырғыш крем",
+      ru: "Увлажняющий крем с экстрактом риса",
+    };
+    fields.quantity = { original: "50 mL", kk: "50 мл", ru: "50 мл" };
+    fields.composition = {
+      original: "정제수, 글리세린, 스쿠알란, 쌀추출물",
+      kk: "Тазартылған су, глицерин, сквалан, күріш сығындысы.",
+      ru: "Очищенная вода, глицерин, сквалан, экстракт риса.",
+    };
+    fields.usage = {
+      original: "세안 후 얼굴에 고르게 펴 바르세요.",
+      kk: "Бетті жуғаннан кейін кремді бетке біркелкі жағыңыз.",
+      ru: "После умывания равномерно нанесите крем на лицо.",
+    };
+  } else {
+    fields.name = {
+      original: "녹차 클렌징 폼",
+      kk: "Көк шай сығындысы бар бет жууға арналған көбік",
+      ru: "Пенка для умывания с экстрактом зелёного чая",
+    };
+    fields.quantity = { original: "120 mL", kk: "120 мл", ru: "120 мл" };
+    fields.composition = {
+      original: "정제수, 글리세린, 코코글루코사이드, 녹차추출물",
+      kk: "Тазартылған су, глицерин, коко-глюкозид, көк шай сығындысы.",
+      ru: "Очищенная вода, глицерин, коко-глюкозид, экстракт зелёного чая.",
+    };
+    fields.usage = {
+      original: "물로 거품을 낸 뒤 얼굴을 씻고 헹구세요.",
+      kk: "Сумен көбіктендіріп, бетіңізді жуыңыз да, сумен шайыңыз.",
+      ru: "Вспеньте средство с водой, умойтесь и смойте водой.",
+    };
+  }
+  return { sourceLanguage: "Korean", fields, eacMark: false, mode: "demo", sampleCategory: "cosmetics" };
+}
+
 export function demoResult(id: SampleId): AnalyzeResult {
-  return id === "oat-cookies" ? oatCookies() : hazelnutChocolate();
+  switch (id) {
+    case "oat-cookies": return oatCookies();
+    case "hazelnut-chocolate": return hazelnutChocolate();
+    case "rice-cream":
+    case "green-tea-cleanser": return cosmeticSample(id);
+  }
 }

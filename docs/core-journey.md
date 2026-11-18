@@ -17,7 +17,7 @@ Everything in the MVP serves this path.
 | 6 | Goes to download | Builds the finished label as a sticker with two language blocks | A print-ready label |
 | 7 | Prints, saves as PDF, downloads a text file or copies the text | — | The user leaves with a usable label |
 
-The two sample buttons open prepared, editable examples directly at step 4. The review screen identifies them as demos.
+The four sample buttons open prepared, editable examples directly at step 4. The two Korean cosmetics examples show the name, ingredients, quantity and directions. The food checklist applies to food only. The review screen identifies them as demos.
 
 ## Non-ideal cases the app handles
 

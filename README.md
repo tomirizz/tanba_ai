@@ -8,7 +8,7 @@ It is the MVP for the Tańba AI startup project (Technological Entrepreneurship,
 
 ## What the user does
 
-1. **Upload** a photo for Gemini to read, or open a prepared example using either sample button.
+1. **Upload** a photo for Gemini to read, or try a prepared food or Korean cosmetics example.
 2. **Check and edit**: the AI reads the label and translates each part. The user corrects the text and sees which required details are missing.
 3. **Download**: print the finished label as a sticker, save it as PDF, download it as a text file, or copy it.
 
@@ -26,7 +26,7 @@ npm run dev
 
 Open http://localhost:3000.
 
-Without an API key the app runs in **demo mode**: the two sample labels work from start to finish, and an uploaded photo gets a clear "AI is not connected" message.
+Without an API key the app runs in **demo mode**: the four sample labels work from start to finish, and an uploaded photo gets a clear "AI is not connected" message.
 
 ## Connect the AI
 

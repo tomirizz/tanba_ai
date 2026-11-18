@@ -143,6 +143,7 @@ export type AnalyzeResult = {
   eacMark: boolean;
   // "ai": read by the AI service. "demo": a prepared example, no AI call.
   mode: "ai" | "demo";
+  sampleCategory?: "cosmetics";
 };
 
 export function emptyFields(): LabelFields {
