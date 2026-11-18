@@ -166,6 +166,13 @@ describe("product label categories", () => {
     expect(buildLabelText(answer.fields)).toContain("Избегайте попадания в глаза.");
   });
 
+  it("retains multiple printed lines when Gemini repeats a field", () => {
+    const size = { id: "specifications", original: "36 x 42 cm", ru: "36 x 42 см", kk: "36 x 42 см" };
+    const capacity = { id: "specifications", original: "8 L", ru: "8 л", kk: "8 л" };
+    const result = normalizeAnswer({ category: "other", isLabel: true, fields: [size, capacity, size] });
+    expect(result.fields.specifications.ru).toBe("36 x 42 см\n8 л");
+  });
+
   it("keeps product-specific details and uses a neutral category for an unknown type", () => {
     const answer = normalizeAnswer({
       isLabel: true, category: "textiles",
