@@ -1,7 +1,8 @@
 // The only file that talks to the Google Gemini API.
 // It runs on the server, so the API key never reaches the browser.
 
-import { GoogleGenAI } from "@google/genai";
+import { ApiError, GoogleGenAI } from "@google/genai";
+import { setTimeout as delay } from "node:timers/promises";
 import { FIELD_IDS } from "./fields";
 import { normalizeAnswer, type NormalizedAnswer } from "./normalize";
 
@@ -69,27 +70,36 @@ export async function readLabelWithGemini(
   mimeType: string,
 ): Promise<NormalizedAnswer> {
   const ai = new GoogleGenAI({ apiKey });
+  const model = process.env.GEMINI_MODEL || DEFAULT_MODEL;
+  const signal = AbortSignal.timeout(TIMEOUT_MS);
+  const data = Buffer.from(imageBytes).toString("base64");
+  const prompt = "Read this label and return every detail.";
 
-  const response = await ai.models.generateContent({
-    model: process.env.GEMINI_MODEL || DEFAULT_MODEL,
-    contents: [
-      {
-        inlineData: {
-          mimeType,
-          data: Buffer.from(imageBytes).toString("base64"),
-        },
+  let text: string | undefined;
+  try {
+    const response = await ai.models.generateContent({
+      model,
+      contents: [{ inlineData: { mimeType, data } }, { text: prompt }],
+      config: {
+        systemInstruction: INSTRUCTIONS,
+        responseMimeType: "application/json",
+        responseJsonSchema: ANSWER_SCHEMA,
+        temperature: 0.1,
+        abortSignal: signal,
       },
-      { text: "Read this label and return every detail." },
-    ],
-    config: {
-      systemInstruction: INSTRUCTIONS,
-      responseMimeType: "application/json",
-      responseJsonSchema: ANSWER_SCHEMA,
-      temperature: 0.1,
-      abortSignal: AbortSignal.timeout(TIMEOUT_MS),
-    },
-  });
-
-  const text = response.text ?? "";
-  return normalizeAnswer(JSON.parse(text));
+    });
+    text = response.text;
+  } catch (error) {
+    if (!(error instanceof ApiError) || error.status !== 503) throw error;
+    await delay(1000, undefined, { signal });
+    const interaction = await ai.interactions.create({
+      model,
+      store: false,
+      input: [{ type: "image", mime_type: mimeType, data }, { type: "text", text: prompt }],
+      system_instruction: INSTRUCTIONS,
+      response_format: { type: "text", mime_type: "application/json", schema: ANSWER_SCHEMA },
+    }, { signal, maxRetries: 0 });
+    text = interaction.output_text;
+  }
+  return normalizeAnswer(JSON.parse(text ?? ""));
 }

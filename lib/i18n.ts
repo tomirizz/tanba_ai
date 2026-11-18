@@ -35,7 +35,7 @@ const en = {
   reviewTitle: "Check the translation",
   reviewText: "AI can make mistakes. Read every line and correct it before you print.",
   demoNote:
-    "Demo mode: AI is not connected, so this is a prepared example. Editing and download work as usual.",
+    "Demo mode: you can edit and download this prepared label. Upload your own photo for AI analysis.",
   photoAlt: "The label photo you uploaded",
   sourceLanguage: "Label language",
   colOriginal: "On the label",
@@ -113,7 +113,7 @@ const kk: Record<TextKey, string> = {
   reviewTitle: "Аударманы тексеріңіз",
   reviewText: "AI қателесуі мүмкін. Басып шығармас бұрын әр жолды оқып, түзетіңіз.",
   demoNote:
-    "Демо режимі: AI қосылмаған, сондықтан бұл алдын ала дайындалған мысал. Түзету мен жүктеп алу әдеттегідей жұмыс істейді.",
+    "Демо режимі: дайын заттаңбаны өңдеп, жүктеп алуға болады. Жасанды интеллект арқылы талдау үшін өз фотоңызды жүктеңіз.",
   photoAlt: "Сіз жүктеген заттаңба фотосы",
   sourceLanguage: "Заттаңба тілі",
   colOriginal: "Заттаңбада",
