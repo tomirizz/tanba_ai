@@ -10,6 +10,7 @@ import { normalizeAnswer, type NormalizedAnswer } from "./normalize";
 // current fast multimodal model shown in Google AI Studio.
 const DEFAULT_MODEL = "gemini-3.8-flash";
 
+const FALLBACK_MODEL = "gemini-3.5-flash-lite";
 const TIMEOUT_MS = 45_000;
 
 const INSTRUCTIONS = `You transcribe and translate product labels into Kazakh and Russian for people in Kazakhstan. Korean skincare and makeup are a main use case. Accept readable labels for any product, including cosmetics, household goods, electronics, textiles and food.
@@ -104,7 +105,7 @@ export async function readLabelWithGemini(
     const interaction = await ai.interactions.create({
       // Inline image and text parts require the beta Interactions request format.
       api_version: "v1beta",
-      model,
+      model: model === FALLBACK_MODEL ? "gemini-3.1-flash-lite" : FALLBACK_MODEL,
       store: false,
       input: [{ type: "image", mime_type: mimeType, data }, { type: "text", text: prompt }],
       system_instruction: INSTRUCTIONS,
