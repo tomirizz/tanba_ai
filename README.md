@@ -8,7 +8,7 @@ It is the MVP for the Tańba AI startup project (Technological Entrepreneurship,
 
 ## What the user does
 
-1. **Upload** a photo of the label, or pick a built-in sample.
+1. **Upload** a photo for Gemini to read, or open a prepared example using either sample button.
 2. **Check and edit**: the AI reads the label and translates each part. The user corrects the text and sees which required details are missing.
 3. **Download**: print the finished label as a sticker, save it as PDF, download it as a text file, or copy it.
 
