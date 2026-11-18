@@ -1,5 +1,7 @@
 # Tańba AI
 
+[Open the live application](https://tanba-ai.vercel.app/) · [Production test results](docs/real-run-results.md)
+
 Tańba AI turns a photo of a foreign food label into a label in Kazakh and Russian, and shows which required details are missing.
 
 It is the MVP for the Tańba AI startup project (Technological Entrepreneurship, AITU, group BDA-2403).
