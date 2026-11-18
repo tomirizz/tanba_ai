@@ -12,7 +12,7 @@ export const FOOD_FIELD_IDS = [
   "gmo",
 ] as const;
 
-export const FIELD_IDS = [...FOOD_FIELD_IDS, "warnings", "batch", "origin", "otherDetails"] as const;
+export const FIELD_IDS = [...FOOD_FIELD_IDS, "warnings", "batch", "origin", "materials", "model", "specifications", "care", "otherDetails"] as const;
 export const PRODUCT_CATEGORIES = ["cosmetics", "food", "other"] as const;
 export type ProductCategory = (typeof PRODUCT_CATEGORIES)[number];
 
@@ -139,6 +139,22 @@ export const FIELDS: FieldDef[] = [
   {
     id: "origin", level: "conditional", printTitle: true,
     label: { en: "Country of origin", kk: "Шығарылған елі", ru: "Страна происхождения" },
+  },
+  {
+    id: "materials", level: "conditional", printTitle: true,
+    label: { en: "Materials", kk: "Материалдар", ru: "Материалы" },
+  },
+  {
+    id: "model", level: "conditional", printTitle: true,
+    label: { en: "Model", kk: "Модель", ru: "Модель" },
+  },
+  {
+    id: "specifications", level: "conditional", printTitle: true,
+    label: { en: "Specifications", kk: "Сипаттамалары", ru: "Характеристики" },
+  },
+  {
+    id: "care", level: "conditional", printTitle: true,
+    label: { en: "Care instructions", kk: "Күтім нұсқаулары", ru: "Уход" },
   },
   {
     id: "otherDetails", level: "conditional", printTitle: true,

@@ -32,11 +32,13 @@ export function normalizeAnswer(raw: unknown): NormalizedAnswer {
       if (!item || typeof item !== "object") continue;
       const row = item as Record<string, unknown>;
       if (!isFieldId(row.id)) continue;
-      fields[row.id] = {
-        original: cleanText(row.original),
-        kk: cleanText(row.kk),
-        ru: cleanText(row.ru),
-      };
+      const field = fields[row.id];
+      for (const lang of ["original", "kk", "ru"] as const) {
+        const value = cleanText(row[lang]);
+        if (value && !field[lang].split("\n").includes(value)) {
+          field[lang] = cleanText(field[lang] ? `${field[lang]}\n${value}` : value);
+        }
+      }
     }
   }
 

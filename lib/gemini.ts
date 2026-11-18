@@ -29,7 +29,7 @@ Rules:
 
 Details:
 - name: product name
-- composition: ingredients (including INCI for cosmetics and printed allergens for food), materials or fibre composition
+- composition: ingredients (including INCI for cosmetics and printed allergens for food)
 - quantity: net weight or volume
 - manufactureDate: date of manufacture
 - shelfLife: expiry, shelf life or period after opening
@@ -42,7 +42,11 @@ Details:
 - warnings: printed precautions or hazards
 - batch: batch or lot number
 - origin: country of origin
-- otherDetails: any other printed product information not covered above, including electrical ratings, model identifiers or care symbols with clearly identifiable meanings; retain distinct details on separate lines`;
+- materials: materials and fibre composition for non-food goods
+- model: model name, model number or item reference, preserving letters, digits and punctuation
+- specifications: dimensions, ratings, technical and other measurements, preserving all numbers and units
+- care: printed washing and care instructions
+- otherDetails: any remaining printed product details. Combine multiple distinct statements for one field into a single string with line breaks`;
 
 // JSON Schema that forces the AI to answer in a fixed structure.
 const ANSWER_SCHEMA = {
