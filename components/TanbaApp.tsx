@@ -6,7 +6,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { checkLabel } from "@/lib/compliance";
-import { sampleImagePath, type SampleId } from "@/lib/demo";
+import { demoResult, sampleImagePath, type SampleId } from "@/lib/demo";
 import { isErrorCode, type ErrorCode } from "@/lib/errors";
 import type { AnalyzeResult, FieldId, OutputLang } from "@/lib/fields";
 import { checkFile } from "@/lib/validation";
@@ -43,14 +43,14 @@ export default function TanbaApp() {
     window.scrollTo({ top: 0 });
   }, [stage]);
 
-  function showPhoto(file: File | null) {
+  function showPhoto(url: string | null) {
     setPhotoUrl((old) => {
-      if (old) URL.revokeObjectURL(old); // free the memory of the previous preview
-      return file ? URL.createObjectURL(file) : null;
+      if (old?.startsWith("blob:")) URL.revokeObjectURL(old);
+      return url;
     });
   }
 
-  async function analyze(file: File, sampleId?: SampleId) {
+  async function analyze(file: File) {
     // Check the file in the browser first: the user gets an answer at once.
     const problem = checkFile(file.type, file.size);
     if (problem) {
@@ -59,12 +59,11 @@ export default function TanbaApp() {
     }
 
     setError(null);
-    showPhoto(file);
+    showPhoto(URL.createObjectURL(file));
     setStage("analyzing");
 
     const body = new FormData();
     body.append("file", file);
-    if (sampleId) body.append("sampleId", sampleId);
 
     try {
       const response = await fetch("/api/analyze", { method: "POST", body });
@@ -84,14 +83,11 @@ export default function TanbaApp() {
     }
   }
 
-  async function analyzeSample(id: SampleId) {
-    try {
-      const response = await fetch(sampleImagePath(id));
-      const blob = await response.blob();
-      await analyze(new File([blob], `${id}.png`, { type: "image/png" }), id);
-    } catch {
-      setError("network");
-    }
+  function analyzeSample(id: SampleId) {
+    setError(null);
+    showPhoto(sampleImagePath(id));
+    setResult(demoResult(id));
+    setStage("review");
   }
 
   function editField(id: FieldId, lang: OutputLang, text: string) {
