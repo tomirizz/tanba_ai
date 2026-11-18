@@ -1,9 +1,13 @@
 import { afterEach, expect, it, vi } from "vitest";
 import { readLabelWithGemini } from "../lib/gemini";
 
-afterEach(() => vi.unstubAllGlobals());
+afterEach(() => {
+  vi.unstubAllGlobals();
+  vi.unstubAllEnvs();
+});
 
 it("retries a busy model using the Interactions version that accepts inline image and text parts", async () => {
+  vi.stubEnv("GEMINI_MODEL", "gemini-3.1-flash-lite");
   const answer = {
     isLabel: true, sourceLanguage: "English", eacMark: false,
     fields: [{ id: "name", original: "Oats", kk: "Сұлы", ru: "Овёс" }],
@@ -18,6 +22,7 @@ it("retries a busy model using the Interactions version that accepts inline imag
     }
     expect(path).toBe("/v1beta/interactions");
     const body = await request.json();
+    expect(body.model).toBe("gemini-3.5-flash-lite");
     expect(body.store).toBe(false);
     expect(body.input).toEqual([
       { type: "image", mime_type: "image/jpeg", data: "/9j/" },
