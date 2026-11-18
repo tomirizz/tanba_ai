@@ -3,7 +3,7 @@
 The core journey is the one path a user must be able to finish without help.
 Everything in the MVP serves this path.
 
-**User:** an importer or shop owner who sells imported packaged food in Kazakhstan.
+**User:** an importer or shop owner selling imported goods in Kazakhstan, especially Korean skincare and makeup.
 
 **Goal:** get a label in Kazakh and Russian for a product whose label is in another language.
 
@@ -17,7 +17,7 @@ Everything in the MVP serves this path.
 | 6 | Goes to download | Builds the finished label as a sticker with two language blocks | A print-ready label |
 | 7 | Prints, saves as PDF, downloads a text file or copies the text | — | The user leaves with a usable label |
 
-The four sample buttons open prepared, editable examples directly at step 4. The two Korean cosmetics examples show the name, ingredients, quantity and directions. The food checklist applies to food only. The review screen identifies them as demos.
+The four sample buttons open prepared, editable examples directly at step 4. The two Korean cosmetics examples show the name, ingredients, quantity and directions. Live uploads also support cosmetics and other product labels. The food checklist applies to food only. The review screen identifies them as demos.
 
 ## Non-ideal cases the app handles
 
