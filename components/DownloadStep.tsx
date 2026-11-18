@@ -28,7 +28,7 @@ export default function DownloadStep({
 }: {
   headingRef: React.RefObject<HTMLHeadingElement | null>;
   fields: LabelFields;
-  check: CheckResult;
+  check: CheckResult | null;
   onEdit: () => void;
   onRestart: () => void;
 }) {
@@ -65,7 +65,7 @@ export default function DownloadStep({
           {t("downloadTitle")}
         </h1>
         <p className="page-text">{t("downloadText")}</p>
-        {check.missing > 0 && (
+        {check && check.missing > 0 && (
           <p className="warning" role="status">
             {t("missingWarning", { n: check.missing })}
           </p>

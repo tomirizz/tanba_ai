@@ -103,7 +103,7 @@ export default function TanbaApp() {
     setStage("upload");
   }
 
-  const check = result ? checkLabel(result.fields, result.eacMark) : null;
+  const check = result && result.sampleCategory !== "cosmetics" ? checkLabel(result.fields, result.eacMark) : null;
 
   return (
     <div className="page">
@@ -133,7 +133,7 @@ export default function TanbaApp() {
           </section>
         )}
 
-        {stage === "review" && result && check && (
+        {stage === "review" && result && (
           <ReviewStep
             headingRef={headingRef}
             result={result}
@@ -146,7 +146,7 @@ export default function TanbaApp() {
           />
         )}
 
-        {stage === "download" && result && check && (
+        {stage === "download" && result && (
           <DownloadStep
             headingRef={headingRef}
             fields={result.fields}

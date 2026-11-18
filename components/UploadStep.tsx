@@ -9,6 +9,8 @@ import { useI18n } from "./I18n";
 const SAMPLE_NAMES: Record<SampleId, TextKey> = {
   "oat-cookies": "sampleOat",
   "hazelnut-chocolate": "sampleChocolate",
+  "rice-cream": "sampleRiceCream",
+  "green-tea-cleanser": "sampleGreenTeaCleanser",
 };
 
 export default function UploadStep({

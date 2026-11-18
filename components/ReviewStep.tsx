@@ -17,7 +17,7 @@ export default function ReviewStep({
 }: {
   headingRef: React.RefObject<HTMLHeadingElement | null>;
   result: AnalyzeResult;
-  check: CheckResult;
+  check: CheckResult | null;
   photoUrl: string | null;
   onEdit: (id: FieldId, lang: OutputLang, text: string) => void;
   onEacChange: (value: boolean) => void;
@@ -25,6 +25,8 @@ export default function ReviewStep({
   onContinue: () => void;
 }) {
   const { lang, t } = useI18n();
+  const cosmetic = result.sampleCategory === "cosmetics";
+  const visibleFields = cosmetic ? FIELDS.filter(({ id }) => result.fields[id].original) : FIELDS;
 
   return (
     <section className="review">
@@ -33,7 +35,7 @@ export default function ReviewStep({
           {t("reviewTitle")}
         </h1>
         <p className="page-text">{t("reviewText")}</p>
-        {result.mode === "demo" && <p className="demo-note">{t("demoNote")}</p>}
+        {result.mode === "demo" && <p className="demo-note">{t(cosmetic ? "cosmeticDemo" : "demoNote")}</p>}
       </div>
 
       <div className="review-layout">
@@ -50,13 +52,13 @@ export default function ReviewStep({
               )}
             </figure>
           )}
-          <CheckList check={check} eacMark={result.eacMark} onEacChange={onEacChange} />
+          {check && <CheckList check={check} eacMark={result.eacMark} onEacChange={onEacChange} />}
         </div>
 
         <div className="review-fields">
-          {FIELDS.map((def) => {
+          {visibleFields.map((def) => {
             const field = result.fields[def.id];
-            const status = check.items.find((item) => item.id === def.id)?.status ?? "ok";
+            const status = check?.items.find((item) => item.id === def.id)?.status ?? "ok";
             const fieldName = def.label[lang];
             // About 36 characters fit on one line of a text box.
             const longest = Math.max(field.kk.length, field.ru.length);
@@ -101,7 +103,7 @@ export default function ReviewStep({
       </div>
 
       <div className="actions-bar">
-        {check.missing > 0 && (
+        {check && check.missing > 0 && (
           <p className="warning" role="status">
             {t("missingWarning", { n: check.missing })}
           </p>
