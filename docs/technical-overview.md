@@ -62,8 +62,8 @@ Without a key the app runs in demo mode with two built-in sample labels.
 ## Deployment
 
 The app is built with `npm run build` and can be hosted on any platform that runs Next.js.
-The repository is connected to the host, the two environment variables are set in the host's
-settings, and each push to the main branch publishes a new version.
+The source is published on [GitHub](https://github.com/tomirizz/tanba_ai). Production URL: [TO FILL].
+Production environment setup and deployment are pending.
 
 ## Limitations
 
@@ -77,5 +77,6 @@ settings, and each push to the main branch publishes a new version.
 - **Cost and quota.** Each photo is one AI request. The request limit is in memory only.
 - **Languages.** Interface: English and Kazakh. Output: Kazakh and Russian. The Kazakh text was
   drafted with AI and must be reviewed by a fluent speaker.
-- **Not yet verified.** As of 18 Nov 2026 the AI path has been tested against a local stand-in
-  for the Gemini service, not against the real service. See `docs/testing.md`.
+- **Live AI verification.** On 18 Nov 2026 the development server could not open its local
+  port. No photo reached Gemini. The earlier integration checks used a local stand-in.
+  [Live-run results](real-run-results.md)

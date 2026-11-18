@@ -12,8 +12,9 @@
 
 ## What has NOT been tested yet
 
-- **The real Gemini service.** No API key was available during development. The first run
-  with a real key is the most important test still to do (see below).
+- **The real Gemini service.** On 18 Nov 2026 the API key and approved model were configured.
+  The local environment blocked the development server from listening, so no image request
+  reached Gemini. [Live-run results](real-run-results.md)
 - **Real label photos.** Only the two generated sample images were used.
 - **Real users.** See the plan below.
 - **Screen readers, old browsers, slow connections.**
